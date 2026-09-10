@@ -936,96 +936,69 @@
         emi = principal / numberOfMonths;
       } else {
         const factor = Math.pow(
-          1 + monthlyRate,
+               1 + monthlyRate,
+          numberOfMonths
+        );
 
-numberOfMonths
+        emi =
+          principal *
+          monthlyRate *
+          factor /
+          (factor - 1);
+      }
 
-);
+      const totalPayment = emi * numberOfMonths;
+      const totalInterest = totalPayment - principal;
 
-emi =
+      document.getElementById("monthlyEmi").textContent =
+        formatCurrency(emi);
 
-* principal monthlyRate factor /* (factor 1);
+      document.getElementById("resultLoanAmount").textContent =
+        formatCurrency(principal);
 
-}
+      document.getElementById("totalInterest").textContent =
+        formatCurrency(Math.max(0, totalInterest));
 
-const totalPayment = emi * numberOfMonths;
+      document.getElementById("totalPayment").textContent =
+        formatCurrency(totalPayment);
 
-const totalInterest = totalPayment principal;
+      document.getElementById("resultTenure").textContent =
+        `${formatNumber(years)} years (${formatNumber(numberOfMonths)} months)`;
 
-document.getElementById("monthlyEmi").textConte nt =
+      results.classList.add("show");
+    }
 
-formatCurrency(emi);
+    /* Reset calculator */
+    function resetCalculator() {
+      loanAmountInput.value = "";
+      interestRateInput.value = "";
+      loanTenureInput.value = "";
 
-document.getElementById("result LoanAmount").tex tContent =
+      document.getElementById("monthlyEmi").textContent = "₹0";
+      document.getElementById("resultLoanAmount").textContent = "₹0";
+      document.getElementById("totalInterest").textContent = "₹0";
+      document.getElementById("totalPayment").textContent = "₹0";
+      document.getElementById("resultTenure").textContent = "0 years";
 
-formatCurrency (principal);
+      results.classList.remove("show");
+      hideError();
+    }
 
-document.getElementById("totalInterest").textCo ntent =
+    /* Button events */
+    calculateBtn.addEventListener("click", calculateEMI);
+    resetBtn.addEventListener("click", resetCalculator);
 
-formatCurrency (Math.max(0, totalInterest));
-
-document.getElementById("totalPayment").textCon tent =
-
-formatCurrency (totalPayment);
-
-document.getElementById("resultTenure").textCon tent = `${formatNumber(years)} years ($ {formatNumber (numberOfMonths)} months)`;
-
-results.classList.add("show");
-}
-
-/* Reset calculator */
-
-function resetCalculator() {
-
-loanAmountInput.value = "";
-
-interestRateInput value = "";
-
-loanTenureInput.value = "";
-
-document.getElementById("monthlyEmi").textConte nt = "0";
-
-document.getElementById("resultLoanAmount").tex tContent = "0";
-
-document.getElementById("totalInterest").textCo ntent = "३०";
-
-document.getElementById("totalPayment").textCon tent = "0";
-
-document.getElementById("resultTenure").textCon tent = "0 years";
-
-}
-
-results.classList.remove("show");
-
-hideError();
-
-/* Button events */
-
-calculateBtn.addEventListener("click", calculateEMI);
-
-resetBtn.addEventListener("click", resetCalculator);
-
-/* Enter key support */
-
-[loanAmountInput, interest Rate Input, loanTenureInput].forEach(
-
-function (input) {
-
-input.addEventListener("keydown", function (event) {
-
-if (event.key === "Enter") {
-
-calculateEMI();
-
-}
-
-});
-
-}
-
-);
-
-</script>
+    /* Enter key support */
+    [loanAmountInput, interestRateInput, loanTenureInput].forEach(
+      function (input) {
+        input.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            calculateEMI();
+          }
+        });
+      }
+    );
+  </script>
 
 </body>
 </html>
