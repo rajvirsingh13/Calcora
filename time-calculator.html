@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Time Calculator - Add & Subtract Time | Calcora</title>
+
+  <meta
+    name="description"
+    content="Use Calcora's free Time Calculator to add or subtract hours, minutes and seconds quickly and accurately."
+  >
+
+  <link rel="canonical" href="https://YOUR-DOMAIN.com/time-calculator.html">
+
+  <meta name="theme-color" content="#ffffff">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f9fc;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
+    }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e8edf5;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 23px;
+      font-weight: 800;
+      color: #172033;
+    }
+
+    .logo-mark {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: #4b5563;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: #eef4ff;
+      color: #2563eb;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    /* Main */
+    main {
+      padding: 35px 0 60px;
+    }
+
+    .breadcrumb {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb a {
+      color: #2563eb;
+    }
+
+    .page-title {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 30px;
+    }
+
+    .page-title h1 {
+      font-size: clamp(30px, 6vw, 44px);
+      line-height: 1.15;
+      margin-bottom: 13px;
+      color: #111827;
+    }
+
+    .page-title p {
+      color: #667085;
+      font-size: 16px;
+    }
+
+    /* Calculator Card */
+    .calculator-card {
+      max-width: 760px;
+      margin: 0 auto 35px;
+      background: #ffffff;
+      border: 1px solid #e5eaf2;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 8px 30px rgba(17, 24, 39, 0.06);
+    }
+
+    .calculator-card h2 {
+      font-size: 21px;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .section-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 10px;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      height: 48px;
+      padding: 0 13px;
+      border: 1px solid #d7deea;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #111827;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      min-height: 49px;
+      border: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    /* Result */
+    .result {
+      display: none;
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 14px;
+      background: #f0f7ff;
+      border: 1px solid #d9e9ff;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result-title {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .result-main {
+      font-size: clamp(28px, 7vw, 40px);
+      line-height: 1.2;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 13px;
+      word-break: break-word;
+    }
+
+    .result-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .detail-box {
+      background: #ffffff;
+      border: 1px solid #e5eaf2;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .detail-box span {
+      display: block;
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 3px;
+    }
+
+    .detail-box strong {
+      font-size: 16px;
+      color: #111827;
+    }
+
+    .error {
+      display: none;
+      margin-top: 15px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      background: #fff3f3;
+      border: 1px solid #ffd3d3;
+      color: #b42318;
+      font-size: 14px;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    /* Content */
+    .content {
+      max-width: 860px;
+      margin: auto;
+    }
+
+    .content-section {
+      background: #ffffff;
+      border: 1px solid #e5eaf2;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .content-section h2 {
+      font-size: 23px;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .content-section h3 {
+      font-size: 18px;
+      margin: 18px 0 8px;
+      color: #1f2937;
+    }
+
+    .content-section p {
+      color: #596579;
+      margin-bottom: 10px;
+    }
+
+    .content-section ul {
+      padding-left: 20px;
+      color: #596579;
+    }
+
+    .content-section li {
+      margin-bottom: 7px;
+    }
+
+    .formula {
+      background: #f7f9fc;
+      border-left: 4px solid #2563eb;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin: 15px 0;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    /* Related */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .related-card {
+      display: block;
+      padding: 15px;
+      border: 1px solid #e5eaf2;
+      border-radius: 11px;
+      background: #f9fbff;
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .related-card:hover {
+      border-color: #b9d0ff;
+      background: #f0f6ff;
+    }
+
+    /* Footer */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e5eaf2;
+      padding: 30px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-weight: 800;
+      color: #172033;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: flex-end;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: #667085;
+    }
+
+    .footer-links a:hover {
+      color: #2563eb;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .nav {
+        min-height: 62px;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 62px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e5eaf2;
+        padding: 12px 4%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px 4px;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      main {
+        padding-top: 25px;
+      }
+
+      .calculator-card,
+      .content-section {
+        padding: 19px;
+        border-radius: 14px;
+      }
+
+      .time-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-row {
+        grid-template-columns: 1fr;
+      }
+
+      .result-details {
+        grid-template-columns: 1fr;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-links {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+
+      <a href="index.html" class="logo" aria-label="Calcora Home">
+        <span class="logo-mark">C</span>
+        <span>Calcora</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="index.html#calculators">Calculators</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+      </nav>
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+    </div>
+  </header>
+
+  <main>
+
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span> / </span>
+        Time Calculator
+      </div>
+
+      <!-- Page Heading -->
+      <section class="page-title">
+        <h1>Time Calculator</h1>
+        <p>
+          Add or subtract hours, minutes and seconds with Calcora's
+          free and easy-to-use Time Calculator.
+        </p>
+      </section>
+
+      <!-- Calculator -->
+      <section class="calculator-card">
+
+        <h2>Calculate Time</h2>
+
+        <div class="section-label">First Time</div>
+
+        <div class="time-grid">
+
+          <div class="field">
+            <label for="hours1">Hours</label>
+            <input
+              type="number"
+              id="hours1"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+            >
+          </div>
+
+          <div class="field">
+            <label for="minutes1">Minutes</label>
+            <input
+              type="number"
+              id="minutes1"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+            >
+          </div>
+
+          <div class="field">
+            <label for="seconds1">Seconds</label>
+            <input
+              type="number"
+              id="seconds1"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+            >
+          </div>
+
+        </div>
+
+        <div class="section-label">Operation</div>
+
+        <div class="field">
+          <label for="operation">Choose Operation</label>
+          <select id="operation">
+            <option value="add">Add Time</option>
+            <option value="subtract">Subtract Time</option>
+          </select>
+        </div>
+
+        <div class="section-label">Second Time</div>
+
+        <div class="time-grid">
+
+          <div class="field">
+            <label for="hours2">Hours</label>
+            <input
+              type="number"
+              id="hours2"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+            >
+          </div>
+
+          <div class="field">
+            <label for="minutes2">Minutes</label>
+            <input
+              type="number"
+              id="minutes2"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+            >
+          </div>
+
+          <div class="field">
+            <label for="seconds2">Seconds</label>
+            <input
+              type="number"
+              id="seconds2"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+            >
+          </div>
+
+        </div>
+
+        <div class="action-row">
+
+          <button
+            class="btn btn-primary"
+            id="calculateBtn"
+            type="button"
+          >
+            Calculate Time
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            id="resetBtn"
+            type="button"
+          >
+            Reset
+          </button>
+
+        </div>
+
+        <div class="error" id="errorBox"></div>
+
+        <div class="result" id="resultBox">
+
+          <div class="result-title">Result</div>
+
+          <div class="result-main" id="mainResult">
+            0 hours 0 minutes 0 seconds
+          </div>
+
+          <div class="result-details">
+
+            <div class="detail-box">
+              <span>Total Hours</span>
+              <strong id="totalHours">0</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Total Minutes</span>
+              <strong id="totalMinutes">0</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Total Seconds</span>
+              <strong id="totalSeconds">0</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Content -->
+      <div class="content">
+
+        <section class="content-section">
+          <h2>How to Use the Time Calculator</h2>
+
+          <p>
+            Calcora's Time Calculator helps you quickly add or subtract
+            two amounts of time.
+          </p>
+
+          <ul>
+            <li>Enter the hours, minutes and seconds for the first time.</li>
+            <li>Choose whether you want to add or subtract the second time.</li>
+            <li>Enter the hours, minutes and seconds for the second time.</li>
+            <li>Click <strong>Calculate Time</strong> to see the result.</li>
+          </ul>
+        </section>
+
+        <section class="content-section">
+          <h2>How Time Calculation Works</h2>
+
+          <p>
+            Time is converted into seconds before the calculation.
+            This makes addition and subtraction accurate even when
+            minutes or seconds go above their normal ranges.
+          </p>
+
+          <div class="formula">
+            Total Seconds = Hours × 3,600 + Minutes × 60 + Seconds
+          </div>
+
+          <p>
+            After the calculation, the total seconds are converted back
+            into hours, minutes and seconds so the result is easy to read.
+          </p>
+
+          <h3>Example</h3>
+
+          <p>
+            If you add 2 hours 30 minutes to 1 hour 45 minutes,
+            the result is 4 hours 15 minutes.
+          </p>
+        </section>
+
+        <section class="content-section">
+          <h2>Time Calculator FAQ</h2>
+
+          <h3>Can I add hours, minutes and seconds?</h3>
+          <p>
+            Yes. You can enter all three values and Calcora will calculate
+            the combined time.
+          </p>
+
+          <h3>Can I subtract time?</h3>
+          <p>
+            Yes. Select "Subtract Time" and enter the second time.
+            The calculator will subtract it from the first time.
+          </p>
+
+          <h3>What happens if the result is negative?</h3>
+          <p>
+            When subtracting a larger time from a smaller time, the result
+            is shown as a negative duration while the total hours,
+            minutes and seconds remain accurate.
+          </p>
+
+          <h3>Can I enter more than 59 minutes?</h3>
+          <p>
+            Yes. The calculator converts the complete value into seconds,
+            so values such as 90 minutes are handled correctly.
+          </p>
+        </section>
+
+        <section class="content-section">
+          <h2>Related Calculators</h2>
+
+          <div class="related-grid">
+
+            <a class="related-card" href="date-calculator.html">
+              Date Calculator
+            </a>
+
+            <a class="related-card" href="age-calculator.html">
+              Age Calculator
+            </a>
+
+            <a class="related-card" href="percentage-calculator.html">
+              Percentage Calculator
+            </a>
+
+            <a class="related-card" href="discount-calculator.html">
+              Discount Calculator
+            </a>
+
+            <a class="related-card" href="emi-calculator.html">
+              EMI Calculator
+            </a>
+
+            <a class="related-card" href="bmi-calculator.html">
+              BMI Calculator
+            </a>
+
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-inner">
+
+      <div>
+        <div class="footer-brand">Calcora</div>
+        <div class="footer-text">
+          Free, fast and easy online calculators.
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="disclaimer.html">Disclaimer</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    /* Mobile Menu */
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("active");
+
+      menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      menuBtn.setAttribute(
+        "aria-label",
+        isOpen ? "Close menu" : "Open menu"
+      );
+    });
+
+    /* Calculator Elements */
+    const calculateBtn = document.getElementById("calculateBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const resultBox = document.getElementById("resultBox");
+    const errorBox = document.getElementById("errorBox");
+
+    const mainResult = document.getElementById("mainResult");
+    const totalHours = document.getElementById("totalHours");
+    const totalMinutes = document.getElementById("totalMinutes");
+    const totalSeconds = document.getElementById("totalSeconds");
+
+    function getNumber(id) {
+      const value = Number(document.getElementById(id).value);
+
+      if (!Number.isFinite(value) || value < 0) {
+        return null;
+      }
+
+      return value;
+    }
+
+    function formatNumber(value) {
+      return Number.isInteger(value)
+        ? String(value)
+        : value.toFixed(2).replace(/\.?0+$/, "");
+    }
+
+    function calculateTime() {
+
+      errorBox.classList.remove("show");
+      resultBox.classList.remove("show");
+
+      const h1 = getNumber("hours1");
+      const m1 = getNumber("minutes1");
+      const s1 = getNumber("seconds1");
+
+      const h2 = getNumber("hours2");
+      const m2 = getNumber("minutes2");
+      const s2 = getNumber("seconds2");
+
+      if (
+        h1 === null ||
+        m1 === null ||
+        s1 === null ||
+        h2 === null ||
+        m2 === null ||
+        s2 === null
+      ) {
+        errorBox.textContent =
+          "Please enter valid non-negative time values.";
+        errorBox.classList.add("show");
+        return;
+      }
+
+      const firstSeconds =
+        (h1 * 3600) +
+        (m1 * 60) +
+        s1;
+
+      const secondSeconds =
+        (h2 * 3600) +
+        (m2 * 60) +
+        s2;
+
+      const operation =
+        document.getElementById("operation").value;
+
+      let resultSeconds;
+
+      if (operation === "add") {
+        resultSeconds = firstSeconds + secondSeconds;
+      } else {
+        resultSeconds = firstSeconds - secondSeconds;
+      }
+
+      const sign = resultSeconds < 0 ? "-" : "";
+      const absoluteSeconds = Math.abs(resultSeconds);
+
+      const hours = Math.floor(absoluteSeconds / 3600);
+      const minutes = Math.floor(
+        (absoluteSeconds % 3600) / 60
+      );
+      const seconds = absoluteSeconds % 60;
+
+      const formattedSeconds = formatNumber(seconds);
+
+      mainResult.textContent =
+        sign +
+        hours +
+        " hours " +
+        minutes +
+        " minutes " +
+        formattedSeconds +
+        " seconds";
+
+      totalHours.textContent =
+        sign + formatNumber(absoluteSeconds / 3600);
+
+      totalMinutes.textContent =
+        sign + formatNumber(absoluteSeconds / 60);
+
+      totalSeconds.textContent =
+        sign + formatNumber(absoluteSeconds);
+
+      resultBox.classList.add("show");
+    }
+
+    calculateBtn.addEventListener("click", calculateTime);
+
+    /* Reset */
+    resetBtn.addEventListener("click", function () {
+
+      document.getElementById("hours1").value = 0;
+      document.getElementById("minutes1").value = 0;
+      document.getElementById("seconds1").value = 0;
+
+      document.getElementById("hours2").value = 0;
+      document.getElementById("minutes2").value = 0;
+      document.getElementById("seconds2").value = 0;
+
+      document.getElementById("operation").value = "add";
+
+      resultBox.classList.remove("show");
+      errorBox.classList.remove("show");
+      errorBox.textContent = "";
+    });
+
+    /* Enter key support */
+    document.querySelectorAll("input, select").forEach(function (element) {
+      element.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          calculateTime();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
