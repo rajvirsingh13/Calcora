@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Payment Calculator - Calculate Monthly Payments | Calcora</title>
+
+  <meta
+    name="description"
+    content="Use Calcora's free payment calculator to estimate monthly payments, total interest, and total payment for a loan."
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <link
+    rel="canonical"
+    href="https://YOUR-DOMAIN.com/payment-calculator.html"
+  >
+
+  <meta name="theme-color" content="#ffffff">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f9fc;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1px solid #e8ecf2;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      min-height: 68px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 23px;
+      font-weight: 700;
+      color: #172033;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: #4b5563;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 26px;
+      cursor: pointer;
+      color: #172033;
+    }
+
+    /* Main */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 0 18px;
+    }
+
+    .breadcrumb {
+      padding-top: 28px;
+      margin-bottom: 14px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .breadcrumb a {
+      color: #2563eb;
+    }
+
+    .hero {
+      background: #ffffff;
+      border: 1px solid #e8ecf2;
+      border-radius: 18px;
+      padding: 28px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .intro {
+      color: #5b6575;
+      font-size: 16px;
+      max-width: 750px;
+    }
+
+    /* Calculator */
+    .calculator {
+      background: #ffffff;
+      border: 1px solid #e8ecf2;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .calculator h2 {
+      font-size: 22px;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 7px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-prefix,
+    .input-suffix {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .input-prefix {
+      left: 13px;
+    }
+
+    .input-suffix {
+      right: 13px;
+    }
+
+    .input-wrapper .has-prefix {
+      padding-left: 34px;
+    }
+
+    .input-wrapper .has-suffix {
+      padding-right: 65px;
+    }
+
+    .input-group input {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 13px;
+      border: 1px solid #cfd7e3;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #111827;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .help-text {
+      margin-top: 5px;
+      color: #7a8494;
+      font-size: 12px;
+    }
+
+    .calc-btn {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .calc-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .reset-btn {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #cfd7e3;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #374151;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .reset-btn:hover {
+      background: #f8fafc;
+    }
+
+    /* Results */
+    .results {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .results.show {
+      display: block;
+    }
+
+    .main-result {
+      padding: 20px;
+      border-radius: 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .main-result .label {
+      color: #475569;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .main-result .payment-value {
+      color: #1d4ed8;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .result-card {
+      padding: 15px;
+      border: 1px solid #e5eaf1;
+      border-radius: 12px;
+      background: #fbfcfe;
+    }
+
+    .result-card span {
+      display: block;
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .result-card strong {
+      color: #172033;
+      font-size: 17px;
+    }
+
+    .error {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    /* Content */
+    .content-section {
+      background: #ffffff;
+      border: 1px solid #e8ecf2;
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+
+    .content-section h2 {
+      font-size: 23px;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .content-section h3 {
+      font-size: 18px;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #1f2937;
+    }
+
+    .content-section p {
+      color: #566174;
+      margin-bottom: 10px;
+    }
+
+    .content-section ul {
+      padding-left: 20px;
+      color: #566174;
+    }
+
+    .content-section li {
+      margin-bottom: 7px;
+    }
+
+    .formula {
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-weight: 600;
+      color: #334155;
+      overflow-x: auto;
+    }
+
+    /* Related */
+    .related {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .related a {
+      padding: 14px;
+      border: 1px solid #e5eaf1;
+      border-radius: 11px;
+      color: #2563eb;
+      font-weight: 600;
+      background: #ffffff;
+    }
+
+    .related a:hover {
+      background: #f8fbff;
+      border-color: #bfdbfe;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 35px;
+      background: #ffffff;
+      border-top: 1px solid #e8ecf2;
+      padding: 28px 18px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a:hover {
+      color: #2563eb;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .nav {
+        min-height: 62px;
+        padding: 0 16px;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 62px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e8ecf2;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 14px 18px;
+        border-top: 1px solid #f0f2f5;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .container {
+        padding: 0 14px;
+      }
+
+      .breadcrumb {
+        padding-top: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .hero {
+        padding: 23px 17px;
+      }
+
+      .calculator {
+        padding: 17px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .related {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+
+      <a href="index.html" class="logo" aria-label="Calcora Home">
+        <span class="logo-mark">C</span>
+        <span>Calcora</span>
+      </a>
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="index.html#calculators">Calculators</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span> › </span>
+      <span>Payment Calculator</span>
+    </div>
+
+    <!-- Intro -->
+    <section class="hero">
+
+      <h1>Payment Calculator</h1>
+
+      <p class="intro">
+        Estimate your monthly loan payment, total interest, and total amount
+        paid with Calcora's free payment calculator.
+      </p>
+
+    </section>
+
+    <!-- Calculator -->
+    <section class="calculator">
+
+      <h2>Calculate Your Monthly Payment</h2>
+
+      <!-- Loan Amount -->
+      <div class="input-group">
+
+        <label for="loanAmount">
+          Loan Amount
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-prefix">₹</span>
+
+          <input
+            type="number"
+            id="loanAmount"
+            class="has-prefix"
+            placeholder="Example: 500000"
+            min="0"
+            step="any"
+            inputmode="decimal"
+          >
+
+        </div>
+
+      </div>
+
+      <!-- Interest Rate -->
+      <div class="input-group">
+
+        <label for="interestRate">
+          Annual Interest Rate
+        </label>
+
+        <div class="input-wrapper">
+
+          <input
+            type="number"
+            id="interestRate"
+            class="has-suffix"
+            placeholder="Example: 8.5"
+            min="0"
+            step="any"
+            inputmode="decimal"
+          >
+
+          <span class="input-suffix">% / year</span>
+
+        </div>
+
+      </div>
+
+      <!-- Loan Term -->
+      <div class="input-group">
+
+        <label for="loanTerm">
+          Loan Term
+        </label>
+
+        <div class="input-wrapper">
+
+          <input
+            type="number"
+            id="loanTerm"
+            class="has-suffix"
+            placeholder="Example: 5"
+            min="0"
+            step="any"
+            inputmode="decimal"
+          >
+
+          <span class="input-suffix">Years</span>
+
+        </div>
+
+        <div class="help-text">
+          You can enter decimal years, such as 2.5 years.
+        </div>
+
+      </div>
+
+      <button class="calc-btn" id="calculateBtn">
+        Calculate Payment
+      </button>
+
+      <button class="reset-btn" id="resetBtn">
+        Reset
+      </button>
+
+      <div class="error" id="errorMessage"></div>
+
+      <!-- Results -->
+      <div class="results" id="results">
+
+        <div class="main-result">
+
+          <div class="label">
+            Estimated Monthly Payment
+          </div>
+
+          <div class="payment-value" id="monthlyPayment">
+            ₹0
+          </div>
+
+        </div>
+
+        <div class="result-grid">
+
+          <div class="result-card">
+            <span>Loan Amount</span>
+            <strong id="resultLoanAmount">₹0</strong>
+          </div>
+
+          <div class="result-card">
+            <span>Total Interest</span>
+            <strong id="totalInterest">₹0</strong>
+          </div>
+
+          <div class="result-card">
+            <span>Total Payment</span>
+            <strong id="totalPayment">₹0</strong>
+          </div>
+
+          <div class="result-card">
+            <span>Total Payments</span>
+            <strong id="numberOfPayments">0 months</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- How to Use -->
+    <section class="content-section">
+
+      <h2>How to Use the Payment Calculator</h2>
+
+      <p>
+        Enter the loan amount, annual interest rate, and loan term to estimate
+        the monthly payment.
+      </p>
+
+      <ul>
+        <li>Enter the amount you plan to borrow.</li>
+        <li>Enter the annual interest rate.</li>
+        <li>Enter the loan term in years.</li>
+        <li>Press <strong>Calculate Payment</strong>.</li>
+      </ul>
+
+    </section>
+
+    <!-- Formula -->
+    <section class="content-section">
+
+      <h2>Payment Calculator Formula</h2>
+
+      <p>
+        For a standard fixed-rate loan with monthly payments, the monthly
+        payment can be calculated using the following formula:
+      </p>
+
+      <div class="formula">
+        M = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1)
+      </div>
+
+      <p>
+        Where:
+      </p>
+
+      <ul>
+        <li><strong>M</strong> = Monthly payment</li>
+        <li><strong>P</strong> = Principal loan amount</li>
+        <li><strong>r</strong> = Monthly interest rate</li>
+        <li><strong>n</strong> = Number of monthly payments</li>
+      </ul>
+
+      <p>
+        The annual interest rate is converted to a monthly rate before the
+        calculation.
+      </p>
+
+    </section>
+
+    <!-- Example -->
+    <section class="content-section">
+
+      <h2>Payment Calculator Example</h2>
+
+      <p>
+        Suppose you borrow ₹5,00,000 at an annual interest rate of 8.5% for
+        5 years.
+      </p>
+
+      <p>
+        The calculator uses the loan amount, monthly interest rate, and number
+        of monthly payments to estimate the monthly payment.
+      </p>
+
+      <p>
+        The actual amount charged by a lender may differ because of fees,
+        insurance, taxes, changing interest rates, or different repayment
+        terms.
+      </p>
+
+    </section>
+
+    <!-- EMI vs Payment -->
+    <section class="content-section">
+
+      <h2>Payment Calculator vs EMI Calculator</h2>
+
+      <p>
+        A payment calculator and EMI calculator can use the same standard
+        fixed-rate monthly payment formula. The terminology may vary depending
+        on the type of loan and the lender.
+      </p>
+
+      <p>
+        Calcora provides both tools so you can find the calculator that best
+        matches the information you are looking for.
+      </p>
+
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+
+      <h2>Frequently Asked Questions</h2>
+
+      <h3>What does a payment calculator calculate?</h3>
+
+      <p>
+        It estimates the monthly payment and can also show the total interest
+        and total amount paid over the selected loan term.
+      </p>
+
+      <h3>Does a longer loan term reduce the monthly payment?</h3>
+
+      <p>
+        Generally, a longer loan term lowers the monthly payment, but it can
+        result in more interest being paid over the full term.
+      </p>
+
+      <h3>Does the interest rate affect monthly payments?</h3>
+
+      <p>
+        Yes. For the same loan amount and term, a higher interest rate generally
+        produces a higher monthly payment.
+      </p>
+
+      <h3>Can I use this calculator for different types of loans?</h3>
+
+      <p>
+        Yes, it can be used to estimate payments for many standard
+        fixed-interest loans. Always check the lender's terms for the actual
+        payment amount.
+      </p>
+
+    </section>
+
+    <!-- Related -->
+    <section class="content-section">
+
+      <h2>Related Calculators</h2>
+
+      <div class="related">
+
+        <a href="emi-calculator.html">
+          EMI Calculator
+        </a>
+
+        <a href="loan-calculator.html">
+          Loan Calculator
+        </a>
+
+        <a href="percentage-calculator.html">
+          Percentage Calculator
+        </a>
+
+        <a href="discount-calculator.html">
+          Discount Calculator
+        </a>
+
+        <a href="age-calculator.html">
+          Age Calculator
+        </a>
+
+        <a href="bmi-calculator.html">
+          BMI Calculator
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#calculators">Calculators</a>
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#about">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <p>© 2026 Calcora. All rights reserved.</p>
+
+  </footer>
+
+  <script>
+    /* Mobile navigation */
+
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", function () {
+
+      navLinks.classList.toggle("active");
+
+      const isOpen =
+        navLinks.classList.contains("active");
+
+      menuBtn.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+      );
+
+      menuBtn.textContent =
+        isOpen ? "✕" : "☰";
+    });
+
+
+    /* Calculator elements */
+
+    const loanAmountInput =
+      document.getElementById("loanAmount");
+
+    const interestRateInput =
+      document.getElementById("interestRate");
+
+    const loanTermInput =
+      document.getElementById("loanTerm");
+
+    const calculateBtn =
+      document.getElementById("calculateBtn");
+
+    const resetBtn =
+      document.getElementById("resetBtn");
+
+    const results =
+      document.getElementById("results");
+
+    const errorMessage =
+      document.getElementById("errorMessage");
+
+
+    /* Currency formatter */
+
+    function formatCurrency(value) {
+
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2
+      }).format(value);
+
+    }
+
+
+    /* Number formatter */
+
+    function formatNumber(value) {
+
+      return new Intl.NumberFormat("en-IN", {
+        maximumFractionDigits: 2
+      }).format(value);
+
+    }
+
+
+    /* Show error */
+
+    function showError(message) {
+
+      errorMessage.textContent = message;
+
+      errorMessage.classList.add("show");
+
+      results.classList.remove("show");
+    }
+
+
+    /* Hide error */
+
+    function hideError() {
+
+      errorMessage.textContent = "";
+
+      errorMessage.classList.remove("show");
+    }
+
+
+    /* Calculate payment */
+
+    function calculatePayment() {
+
+      hideError();
+
+      const loanAmountText =
+        loanAmountInput.value.trim();
+
+      const interestRateText =
+        interestRateInput.value.trim();
+
+      const loanTermText =
+        loanTermInput.value.trim();
+
+
+      /* Empty fields */
+
+      if (
+        loanAmountText === "" ||
+        interestRateText === "" ||
+        loanTermText === ""
+      ) {
+
+        showError(
+          "Please enter the loan amount, interest rate, and loan term."
+        );
+
+        return;
+      }
+
+
+      const principal =
+        Number(loanAmountText);
+
+      const annualRate =
+        Number(interestRateText);
+
+      const years =
+        Number(loanTermText);
+
+
+      /* Invalid numbers */
+
+      if (
+        !Number.isFinite(principal) ||
+        !Number.isFinite(annualRate) ||
+        !Number.isFinite(years)
+      ) {
+
+        showError(
+          "Please enter valid numbers."
+        );
+
+        return;
+      }
+
+
+      /* Validation */
+
+      if (principal <= 0) {
+
+        showError(
+          "Loan amount must be greater than 0."
+        );
+
+        return;
+      }
+
+
+      if (annualRate < 0) {
+
+        showError(
+          "Interest rate cannot be negative."
+        );
+
+        return;
+      }
+
+
+      if (years <= 0) {
+
+        showError(
+          "Loan term must be greater than 0."
+        );
+
+        return;
+      }
+
+
+      if (years > 100) {
+
+        showError(
+          "Please enter a loan term of 100 years or less."
+        );
+
+        return;
+      }
+
+
+      /*
+        Convert years to months.
+
+        The calculator allows decimal years.
+        For example:
+        2.5 years = 30 months.
+      */
+
+      const numberOfMonths =
+        years * 12;
+
+
+      const monthlyRate =
+        annualRate / 12 / 100;
+
+
+      let monthlyPayment;
+
+
+      /*
+        Zero-interest calculation
+      */
+
+      if (monthlyRate === 0) {
+
+        monthlyPayment =
+          principal / numberOfMonths;
+
+      } else {
+
+        const power =
+          Math.pow(
+            1 + monthlyRate,
+            numberOfMonths
+          );
+
+        monthlyPayment =
+          principal *
+          monthlyRate *
+          power /
+          (power - 1);
+      }
+
+
+      const totalPayment =
+        monthlyPayment * numberOfMonths;
+
+
+      const totalInterest =
+        totalPayment - principal;
+
+
+      /* Display results */
+
+      document.getElementById(
+        "monthlyPayment"
+      ).textContent =
+        formatCurrency(monthlyPayment);
+
+
+      document.getElementById(
+        "resultLoanAmount"
+      ).textContent =
+        formatCurrency(principal);
+
+
+      document.getElementById(
+        "totalInterest"
+      ).textContent =
+        formatCurrency(
+          Math.max(0, totalInterest)
+        );
+
+
+      document.getElementById(
+        "totalPayment"
+      ).textContent =
+        formatCurrency(totalPayment);
+
+
+      document.getElementById(
+        "numberOfPayments"
+      ).textContent =
+        `${formatNumber(numberOfMonths)} months`;
+
+
+      results.classList.add("show");
+    }
+
+
+    /* Reset */
+
+    function resetCalculator() {
+
+      loanAmountInput.value = "";
+
+      interestRateInput.value = "";
+
+      loanTermInput.value = "";
+
+
+      document.getElementById(
+        "monthlyPayment"
+      ).textContent = "₹0";
+
+
+      document.getElementById(
+        "resultLoanAmount"
+      ).textContent = "₹0";
+
+
+      document.getElementById(
+        "totalInterest"
+      ).textContent = "₹0";
+
+
+      document.getElementById(
+        "totalPayment"
+      ).textContent = "₹0";
+
+
+      document.getElementById(
+        "numberOfPayments"
+      ).textContent = "0 months";
+
+
+      results.classList.remove("show");
+
+      hideError();
+    }
+
+
+    /* Button events */
+
+    calculateBtn.addEventListener(
+      "click",
+      calculatePayment
+    );
+
+    resetBtn.addEventListener(
+      "click",
+      resetCalculator
+    );
+
+
+    /* Enter key support */
+
+    [
+      loanAmountInput,
+      interestRateInput,
+      loanTermInput
+    ].forEach(function (input) {
+
+      input.addEventListener(
+        "keydown",
+        function (event) {
+
+          if (event.key === "Enter") {
+            calculatePayment();
+          }
+
+        }
+      );
+
+    });
+  </script>
+
+</body>
+</html>
