@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Age Calculator - Calculate Your Exact Age | Calcora</title>
+
+  <meta name="description"
+        content="Calculate your exact age in years, months and days with Calcora's free online Age Calculator. Find your total days, next birthday and more.">
+
+  <meta name="robots" content="index, follow">
+
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="canonical" href="https://YOUR-DOMAIN.com/age-calculator.html">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #111827;
+      --muted: #64748b;
+      --background: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --success-bg: #eff6ff;
+      --shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+      --radius: 14px;
+      --max-width: 900px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .container {
+      width: min(100% - 24px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .desktop-nav a {
+      padding: 8px 12px;
+      border-radius: 9px;
+      color: #475569;
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+
+    .desktop-nav a:hover {
+      background: #eff6ff;
+      color: var(--primary);
+    }
+
+    .menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 21px;
+    }
+
+    /* PAGE */
+
+    .page {
+      padding: 38px 0 60px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .breadcrumb a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .page-heading {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .page-heading h1 {
+      font-size: clamp(1.9rem, 6vw, 2.7rem);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .page-heading p {
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* CALCULATOR */
+
+    .calculator-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .input-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 9px;
+    }
+
+    .date-input {
+      width: 100%;
+      min-height: 52px;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+    }
+
+    .date-input:focus {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 4px #dbeafe;
+    }
+
+    .calculate-button {
+      width: 100%;
+      min-height: 52px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .calculate-button:hover {
+      background: var(--primary-dark);
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 12px;
+      padding: 11px 13px;
+      border-radius: 9px;
+      background: #fef2f2;
+      color: #b91c1c;
+      font-size: 0.9rem;
+    }
+
+    /* RESULT */
+
+    .result {
+      display: none;
+      margin-top: 22px;
+      padding: 20px;
+      background: var(--success-bg);
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+    }
+
+    .result-title {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 14px;
+    }
+
+    .age-main {
+      text-align: center;
+      font-size: clamp(1.7rem, 7vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .result-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 8px;
+      text-align: center;
+    }
+
+    .result-value {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .result-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      margin-top: 2px;
+    }
+
+    .birthday-box {
+      margin-top: 12px;
+      padding: 14px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .birthday-box strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .birthday-box span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* CONTENT */
+
+    .content-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .content-box h2 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+
+    .content-box h3 {
+      font-size: 1.05rem;
+      margin: 20px 0 7px;
+    }
+
+    .content-box p {
+      color: #475569;
+      margin-bottom: 10px;
+    }
+
+    .content-box ul {
+      padding-left: 20px;
+      color: #475569;
+    }
+
+    .content-box li {
+      margin-bottom: 6px;
+    }
+
+    /* FAQ */
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding: 15px 0;
+    }
+
+    .faq-item:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .faq-question {
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .faq-answer {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    /* RELATED */
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .related-link {
+      padding: 13px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .related-link:hover {
+      color: var(--primary);
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    /* FOOTER */
+
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      padding: 30px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .footer-text {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-links a {
+      color: #475569;
+      font-size: 0.85rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      padding: 12px 0 22px;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+      .desktop-nav {
+        display: none;
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: min(100% - 18px, var(--max-width));
+      }
+
+      .calculator-box,
+      .content-box {
+        padding: 18px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding-top: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a href="index.html" class="brand" aria-label="Calcora Home">
+        <span class="brand-mark">C</span>
+        <span>Calcora</span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="index.html#calculators">Calculators</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+      </nav>
+
+      <button
+        class="menu-button"
+        type="button"
+        aria-label="Open menu">
+        ☰
+      </button>
+
+    </div>
+  </header>
+
+
+  <main class="page">
+
+    <div class="container">
+
+      <!-- BREADCRUMB -->
+
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span> › Age Calculator</span>
+      </div>
+
+
+      <!-- PAGE HEADING -->
+
+      <section class="page-heading">
+
+        <h1>Age Calculator</h1>
+
+        <p>
+          Calculate your exact age in years, months and days.
+          You can also find your total days and next birthday.
+        </p>
+
+      </section>
+
+
+      <!-- CALCULATOR -->
+
+      <section class="calculator-box">
+
+        <div class="input-title">
+          Date of Birth
+        </div>
+
+        <input
+          type="date"
+          id="dateOfBirth"
+          class="date-input"
+          aria-label="Date of Birth">
+
+        <button
+          type="button"
+          id="calculateAge"
+          class="calculate-button">
+          Calculate Age
+        </button>
+
+        <div
+          id="errorMessage"
+          class="error-message"
+          role="alert">
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div id="result" class="result">
+
+          <div class="result-title">
+            Your Exact Age
+          </div>
+
+          <div id="ageMain" class="age-main">
+            —
+          </div>
+
+
+          <div class="result-grid">
+
+            <div class="result-item">
+              <span id="totalYears" class="result-value">—</span>
+              <span class="result-label">Years</span>
+            </div>
+
+            <div class="result-item">
+              <span id="totalMonths" class="result-value">—</span>
+              <span class="result-label">Total Months</span>
+            </div>
+
+            <div class="result-item">
+              <span id="totalDays" class="result-value">—</span>
+              <span class="result-label">Total Days</span>
+            </div>
+
+          </div>
+
+
+          <div class="birthday-box">
+
+            <strong>Next Birthday</strong>
+
+            <span id="nextBirthday">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- HOW TO USE -->
+
+      <section class="content-box">
+
+        <h2>How to Use the Age Calculator</h2>
+
+        <p>
+          Enter your date of birth and select
+          <strong>Calculate Age</strong>.
+          Calcora will calculate your age using today's date.
+        </p>
+
+        <h3>What Can You Find?</h3>
+
+        <ul>
+          <li>Your exact age in years, months and days.</li>
+          <li>Your total completed months.</li>
+          <li>Your total completed days.</li>
+          <li>The date of your next birthday.</li>
+          <li>The number of days remaining until your next birthday.</li>
+        </ul>
+
+      </section>
+
+
+      <!-- CALCULATION -->
+
+      <section class="content-box">
+
+        <h2>How Is Age Calculated?</h2>
+
+        <p>
+          Your age is calculated by comparing your date of birth
+          with today's date. The calculator accounts for different
+          month lengths and leap years when calculating the result.
+        </p>
+
+        <p>
+          The displayed age represents the number of completed
+          years, months and days since your date of birth.
+        </p>
+
+      </section>
+
+
+      <!-- FAQ -->
+
+      <section class="content-box">
+
+        <h2>Frequently Asked Questions</h2>
+
+
+        <div class="faq-item">
+
+          <div class="faq-question">
+            How accurate is this Age Calculator?
+          </div>
+
+          <div class="faq-answer">
+            The calculator uses the selected date of birth and
+            your device's current date to calculate the result.
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <div class="faq-question">
+            Can I calculate my age in days?
+          </div>
+
+          <div class="faq-answer">
+            Yes. The calculator shows the total number of
+            completed days since your date of birth.
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <div class="faq-question">
+            Does the calculator account for leap years?
+          </div>
+
+          <div class="faq-answer">
+            Yes. The date calculation takes leap years and
+            different month lengths into account.
+          </div>
+
+        </div>
+
+
+        <div class="faq-item">
+
+          <div class="faq-question">
+            Can I use this calculator on my phone?
+          </div>
+
+          <div class="faq-answer">
+            Yes. The page is designed to work on mobile phones,
+            tablets and desktop screens.
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- RELATED CALCULATORS -->
+
+      <section class="content-box">
+
+        <h2>Related Calculators</h2>
+
+        <div class="related-grid">
+
+          <a
+            href="date-calculator.html"
+            class="related-link">
+            📅 Date Calculator
+          </a>
+
+          <a
+            href="percentage-calculator.html"
+            class="related-link">
+            % Percentage Calculator
+          </a>
+
+          <a
+            href="emi-calculator.html"
+            class="related-link">
+            ₹ EMI Calculator
+          </a>
+
+          <a
+            href="bmi-calculator.html"
+            class="related-link">
+            ⚖️ BMI Calculator
+          </a>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+
+      <div>
+        <div class="footer-brand">
+          Calcora
+        </div>
+
+        <p class="footer-text">
+          Free and easy-to-use online calculators.
+        </p>
+      </div>
+
+
+      <nav class="footer-links" aria-label="Footer navigation">
+
+        <a href="index.html">Home</a>
+
+        <a href="index.html#calculators">
+          Calculators
+        </a>
+
+        <a href="index.html#categories">
+          Categories
+        </a>
+
+        <a href="#">
+          About
+        </a>
+
+        <a href="#">
+          Contact
+        </a>
+
+        <a href="#">
+          Privacy
+        </a>
+
+        <a href="#">
+          Terms
+        </a>
+
+      </nav>
+
+    </div>
+
+
+    <div class="container copyright">
+      © 2026 Calcora. All rights reserved.
+    </div>
+
+  </footer>
+
+
+  <!-- AGE CALCULATOR JAVASCRIPT -->
+
+  <script>
+    const dateOfBirth =
+      document.getElementById("dateOfBirth");
+
+    const calculateButton =
+      document.getElementById("calculateAge");
+
+    const errorMessage =
+      document.getElementById("errorMessage");
+
+    const result =
+      document.getElementById("result");
+
+    const ageMain =
+      document.getElementById("ageMain");
+
+    const totalYears =
+      document.getElementById("totalYears");
+
+    const totalMonths =
+      document.getElementById("totalMonths");
+
+    const totalDays =
+      document.getElementById("totalDays");
+
+    const nextBirthday =
+      document.getElementById("nextBirthday");
+
+
+    function daysInMonth(year, month) {
+      return new Date(year, month + 1, 0).getDate();
+    }
+
+
+    function calculateExactAge(birthDate, today) {
+
+      let years =
+        today.getFullYear() -
+        birthDate.getFullYear();
+
+      let months =
+        today.getMonth() -
+        birthDate.getMonth();
+
+      let days =
+        today.getDate() -
+        birthDate.getDate();
+
+
+      if (days < 0) {
+
+        months--;
+
+        const previousMonth =
+          new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            0
+          );
+
+        days += previousMonth.getDate();
+      }
+
+
+      if (months < 0) {
+
+        years--;
+        months += 12;
+      }
+
+
+      return {
+        years: years,
+        months: months,
+        days: days
+      };
+    }
+
+
+    function calculateTotalDays(birthDate, today) {
+
+      const birthUTC =
+        Date.UTC(
+          birthDate.getFullYear(),
+          birthDate.getMonth(),
+          birthDate.getDate()
+        );
+
+      const todayUTC =
+        Date.UTC(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        );
+
+      const millisecondsPerDay =
+        24 * 60 * 60 * 1000;
+
+      return Math.floor(
+        (todayUTC - birthUTC) /
+        millisecondsPerDay
+      );
+    }
+
+
+    function getNextBirthday(birthDate, today) {
+
+      let year =
+        today.getFullYear();
+
+      let month =
+        birthDate.getMonth();
+
+      let day =
+        birthDate.getDate();
+
+
+      /*
+        February 29 birthdays are handled as
+        February 28 in non-leap years.
+      */
+
+      if (
+        month === 1 &&
+        day === 29 &&
+        !isLeapYear(year)
+      ) {
+        day = 28;
+      }
+
+
+      let birthday =
+        new Date(year, month, day);
+
+
+      if (birthday < today) {
+
+        year++;
+
+        day = birthDate.getDate();
+
+        if (
+          month === 1 &&
+          day === 29 &&
+          !isLeapYear(year)
+        ) {
+          day = 28;
+        }
+
+        birthday =
+          new Date(year, month, day);
+      }
+
+
+      return birthday;
+    }
+
+
+    function isLeapYear(year) {
+
+      return (
+        year % 4 === 0 &&
+        (
+          year % 100 !== 0 ||
+          year % 400 === 0
+        )
+      );
+    }
+
+
+    function formatDate(date) {
+
+      return date.toLocaleDateString(
+        undefined,
+        {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+      );
+    }
+
+
+    calculateButton.addEventListener(
+      "click",
+      function () {
+
+        errorMessage.style.display = "none";
+        result.style.display = "none";
+
+
+        if (!dateOfBirth.value) {
+
+          errorMessage.textContent =
+            "Please select your date of birth.";
+
+          errorMessage.style.display =
+            "block";
+
+          return;
+        }
+
+
+        const parts =
+          dateOfBirth.value.split("-");
+
+
+        const birthDate =
+          new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            Number(parts[2])
+          );
+
+
+        const today =
+          new Date();
+
+        today.setHours(0, 0, 0, 0);
+
+
+        if (birthDate > today) {
+
+          errorMessage.textContent =
+            "Date of birth cannot be in the future.";
+
+          errorMessage.style.display =
+            "block";
+
+          return;
+        }
+
+
+        const age =
+          calculateExactAge(
+            birthDate,
+            today
+          );
+
+
+        const totalDayCount =
+          calculateTotalDays(
+            birthDate,
+            today
+          );
+
+
+        const totalMonthCount = 
+          (
+            age.years * 12
+          ) + 
+          age.months;
+
+const birthday = getNextBirthday ( birthDate, today );
+
+const birthdayUTC = Date. UTC( ); birthday.getFullYear(), birthday.getMonth(), birthday.getDate()
+
+const todayUTC = Date. UTC( ); today.getFullYear(), today.getMonth(), today.getDate()
+
+const daysUntil Birthday = Math.round( (
+
+); birthdayUTC todayUTC )/(24 * 60 * 60 * 1000)
+
+ageMain.textContent =
+
+age years +
+
+Years, +
+
+age months +
+
+Months, +
+
+age.days +
+
+" Days";
+
+totalYears.textContent =
+
+age.years;
+
+totalMonths.textContent = totalMonthCount.toLocaleString();
+
+totalDays.textContent =
+
+totalDayCount.toLocaleString();
+
+if (daysUntilBirthday === 0) {
+
+nextBirthday.textContent = "Today is your birthday!";
+
+} else {
+
+nextBirthday. textContent = formatDate(birthday) + "+ daysUntilBirthday +
+
+days remaining";
+
+}
+
+result.style.display = "block";
+
+result.scrollIntoView({ behavior: "smooth", block: "nearest"
+
+});
+
+}
+
+);
+
+</script>
+
+</body>
+
+</html>
