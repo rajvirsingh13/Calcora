@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>EMI Calculator - Calculate Loan EMI Online | Calcora</title>
+
+  <meta
+    name="description"
+    content="Use Calcora's free EMI calculator to calculate monthly loan EMI, total interest, and total payment for home, personal, car, and other loans."
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <link
+    rel="canonical"
+    href="https://YOUR-DOMAIN.com/emi-calculator.html"
+  >
+
+  <meta name="theme-color" content="#ffffff">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f9fc;
+      color: #172033;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1px solid #e8ecf2;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      min-height: 68px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 23px;
+      font-weight: 700;
+      color: #172033;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: #4b5563;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 26px;
+      cursor: pointer;
+      color: #172033;
+    }
+
+    /* Main */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 0 18px;
+    }
+
+    .breadcrumb {
+      padding-top: 28px;
+      margin-bottom: 14px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .breadcrumb a {
+      color: #2563eb;
+    }
+
+    .hero {
+      background: #ffffff;
+      border: 1px solid #e8ecf2;
+      border-radius: 18px;
+      padding: 28px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .intro {
+      color: #5b6575;
+      font-size: 16px;
+      max-width: 750px;
+    }
+
+    /* Calculator */
+    .calculator {
+      background: #ffffff;
+      border: 1px solid #e8ecf2;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .calculator h2 {
+      font-size: 22px;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 7px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-prefix,
+    .input-suffix {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .input-prefix {
+      left: 13px;
+    }
+
+    .input-suffix {
+      right: 13px;
+    }
+
+    .input-wrapper .has-prefix {
+      padding-left: 34px;
+    }
+
+    .input-wrapper .has-suffix {
+      padding-right: 50px;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 13px;
+      border: 1px solid #cfd7e3;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #111827;
+      outline: none;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .calc-btn {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .calc-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .reset-btn {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #cfd7e3;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #374151;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .reset-btn:hover {
+      background: #f8fafc;
+    }
+
+    /* Results */
+    .results {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .results.show {
+      display: block;
+    }
+
+    .main-result {
+      padding: 20px;
+      border-radius: 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .main-result .label {
+      color: #475569;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .main-result .emi-value {
+      color: #1d4ed8;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .result-card {
+      padding: 15px;
+      border: 1px solid #e5eaf1;
+      border-radius: 12px;
+      background: #fbfcfe;
+    }
+
+    .result-card span {
+      display: block;
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .result-card strong {
+      color: #172033;
+      font-size: 17px;
+    }
+
+    .error {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    /* Content */
+    .content-section {
+      background: #ffffff;
+      border: 1px solid #e8ecf2;
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+
+    .content-section h2 {
+      font-size: 23px;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .content-section h3 {
+      font-size: 18px;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      color: #1f2937;
+    }
+
+    .content-section p {
+      color: #566174;
+      margin-bottom: 10px;
+    }
+
+    .content-section ul {
+      padding-left: 20px;
+      color: #566174;
+    }
+
+    .content-section li {
+      margin-bottom: 7px;
+    }
+
+    .formula {
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-weight: 600;
+      color: #334155;
+      overflow-x: auto;
+    }
+
+    /* Related */
+    .related {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .related a {
+      padding: 14px;
+      border: 1px solid #e5eaf1;
+      border-radius: 11px;
+      color: #2563eb;
+      font-weight: 600;
+      background: #ffffff;
+    }
+
+    .related a:hover {
+      background: #f8fbff;
+      border-color: #bfdbfe;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 35px;
+      background: #ffffff;
+      border-top: 1px solid #e8ecf2;
+      padding: 28px 18px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a:hover {
+      color: #2563eb;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .nav {
+        min-height: 62px;
+        padding: 0 16px;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 62px;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e8ecf2;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 14px 18px;
+        border-top: 1px solid #f0f2f5;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .container {
+        padding: 0 14px;
+      }
+
+      .breadcrumb {
+        padding-top: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .hero {
+        padding: 23px 17px;
+      }
+
+      .calculator {
+        padding: 17px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .related {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+
+      <a href="index.html" class="logo" aria-label="Calcora Home">
+        <span class="logo-mark">C</span>
+        <span>Calcora</span>
+      </a>
+
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="index.html#calculators">Calculators</a>
+        <a href="index.html#categories">Categories</a>
+        <a href="index.html#about">About</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span> › </span>
+      <span>EMI Calculator</span>
+    </div>
+
+    <!-- Intro -->
+    <section class="hero">
+      <h1>EMI Calculator</h1>
+
+      <p class="intro">
+        Calculate your monthly loan EMI, total interest, and total repayment
+        amount using Calcora's free EMI calculator. Useful for home loans,
+        personal loans, car loans, and other monthly installment calculations.
+      </p>
+    </section>
+
+    <!-- Calculator -->
+    <section class="calculator">
+
+      <h2>Calculate Your Loan EMI</h2>
+
+      <!-- Loan Amount -->
+      <div class="input-group">
+        <label for="loanAmount">Loan Amount</label>
+
+        <div class="input-wrapper">
+          <span class="input-prefix">₹</span>
+
+          <input
+            type="number"
+            id="loanAmount"
+            class="has-prefix"
+            placeholder="Example: 500000"
+            min="0"
+            step="any"
+            inputmode="decimal"
+          >
+        </div>
+      </div>
+
+      <!-- Interest -->
+      <div class="input-group">
+        <label for="interestRate">Annual Interest Rate</label>
+
+        <div class="input-wrapper">
+          <input
+            type="number"
+            id="interestRate"
+            class="has-suffix"
+            placeholder="Example: 8.5"
+            min="0"
+            step="any"
+            inputmode="decimal"
+          >
+
+          <span class="input-suffix">% per year</span>
+        </div>
+      </div>
+
+      <!-- Tenure -->
+      <div class="input-group">
+        <label for="loanTenure">Loan Tenure</label>
+
+        <div class="input-wrapper">
+          <input
+            type="number"
+            id="loanTenure"
+            class="has-suffix"
+            placeholder="Example: 5"
+            min="0"
+            step="any"
+            inputmode="decimal"
+          >
+
+          <span class="input-suffix">Years</span>
+        </div>
+      </div>
+
+      <button class="calc-btn" id="calculateBtn">
+        Calculate EMI
+      </button>
+
+      <button class="reset-btn" id="resetBtn">
+        Reset
+      </button>
+
+      <div class="error" id="errorMessage"></div>
+
+      <!-- Results -->
+      <div class="results" id="results">
+
+        <div class="main-result">
+          <div class="label">Monthly EMI</div>
+          <div class="emi-value" id="monthlyEmi">₹0</div>
+        </div>
+
+        <div class="result-grid">
+
+          <div class="result-card">
+            <span>Loan Amount</span>
+            <strong id="resultLoanAmount">₹0</strong>
+          </div>
+
+          <div class="result-card">
+            <span>Total Interest</span>
+            <strong id="totalInterest">₹0</strong>
+          </div>
+
+          <div class="result-card">
+            <span>Total Payment</span>
+            <strong id="totalPayment">₹0</strong>
+          </div>
+
+          <div class="result-card">
+            <span>Loan Tenure</span>
+            <strong id="resultTenure">0 years</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- How to Use -->
+    <section class="content-section">
+
+      <h2>How to Use the EMI Calculator</h2>
+
+      <p>
+        Using the Calcora EMI calculator is simple. Enter your loan amount,
+        annual interest rate, and loan tenure.
+      </p>
+
+      <ul>
+        <li>Enter the total amount you want to borrow.</li>
+        <li>Enter the annual interest rate charged on the loan.</li>
+        <li>Enter the loan tenure in years.</li>
+        <li>Tap <strong>Calculate EMI</strong> to see the result.</li>
+      </ul>
+
+    </section>
+
+    <!-- Formula -->
+    <section class="content-section">
+
+      <h2>How Is EMI Calculated?</h2>
+
+      <p>
+        EMI stands for Equated Monthly Installment. It is the fixed monthly
+        amount generally paid toward a loan based on the principal, interest
+        rate, and loan tenure.
+      </p>
+
+      <div class="formula">
+        EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1)
+      </div>
+
+      <p>
+        Where:
+      </p>
+
+      <ul>
+        <li><strong>P</strong> = Loan principal amount</li>
+        <li><strong>r</strong> = Monthly interest rate</li>
+        <li><strong>n</strong> = Total number of monthly payments</li>
+      </ul>
+
+      <p>
+        The annual interest rate is converted into a monthly rate by dividing
+        it by 12 and then by 100.
+      </p>
+
+    </section>
+
+    <!-- Example -->
+    <section class="content-section">
+
+      <h2>EMI Calculation Example</h2>
+
+      <p>
+        Suppose you borrow ₹5,00,000 at an annual interest rate of 8.5% for
+        5 years.
+      </p>
+
+      <p>
+        The calculator converts the annual interest rate into a monthly rate
+        and calculates the monthly installment using the standard EMI formula.
+      </p>
+
+      <p>
+        Your actual EMI from a lender can differ if the lender uses different
+        charges, rates, repayment structures, or rounding rules.
+      </p>
+
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+
+      <h2>Frequently Asked Questions</h2>
+
+      <h3>What does EMI mean?</h3>
+
+      <p>
+        EMI means Equated Monthly Installment. It is the amount paid at regular
+        monthly intervals toward a loan.
+      </p>
+
+      <h3>Does a higher interest rate increase EMI?</h3>
+
+      <p>
+        Generally, yes. If the loan amount and tenure remain the same, a higher
+        interest rate generally results in a higher EMI.
+      </p>
+
+      <h3>Does a longer loan tenure reduce EMI?</h3>
+
+      <p>
+        A longer tenure generally reduces the monthly EMI, but it can increase
+        the total interest paid over the life of the loan.
+      </p>
+
+      <h3>Can I use this calculator for a home loan?</h3>
+
+      <p>
+        Yes. You can use it for home loans, personal loans, car loans, and
+        other loans that use a standard reducing-balance EMI calculation.
+      </p>
+
+    </section>
+
+    <!-- Related -->
+    <section class="content-section">
+
+      <h2>Related Calculators</h2>
+
+      <div class="related">
+
+        <a href="loan-calculator.html">
+          Loan Calculator
+        </a>
+
+        <a href="payment-calculator.html">
+          Payment Calculator
+        </a>
+
+        <a href="percentage-calculator.html">
+          Percentage Calculator
+        </a>
+
+        <a href="discount-calculator.html">
+          Discount Calculator
+        </a>
+
+        <a href="age-calculator.html">
+          Age Calculator
+        </a>
+
+        <a href="bmi-calculator.html">
+          BMI Calculator
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#calculators">Calculators</a>
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#about">About</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <p>© 2026 Calcora. All rights reserved.</p>
+
+  </footer>
+
+  <script>
+    /* Mobile navigation */
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", function () {
+      navLinks.classList.toggle("active");
+
+      const isOpen = navLinks.classList.contains("active");
+
+      menuBtn.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+      );
+
+      menuBtn.textContent = isOpen ? "✕" : "☰";
+    });
+
+    /* Elements */
+    const loanAmountInput = document.getElementById("loanAmount");
+    const interestRateInput = document.getElementById("interestRate");
+    const loanTenureInput = document.getElementById("loanTenure");
+
+    const calculateBtn = document.getElementById("calculateBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    const results = document.getElementById("results");
+    const errorMessage = document.getElementById("errorMessage");
+
+    /* Format currency */
+    function formatCurrency(value) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2
+      }).format(value);
+    }
+
+    /* Format normal numbers */
+    function formatNumber(value) {
+      return new Intl.NumberFormat("en-IN", {
+        maximumFractionDigits: 2
+      }).format(value);
+    }
+
+    /* Show error */
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.add("show");
+      results.classList.remove("show");
+    }
+
+    /* Hide error */
+    function hideError() {
+      errorMessage.textContent = "";
+      errorMessage.classList.remove("show");
+    }
+
+    /* Calculate EMI */
+    function calculateEMI() {
+      hideError();
+
+      const loanAmountValue = loanAmountInput.value.trim();
+      const interestRateValue = interestRateInput.value.trim();
+      const tenureValue = loanTenureInput.value.trim();
+
+      if (
+        loanAmountValue === "" ||
+        interestRateValue === "" ||
+        tenureValue === ""
+      ) {
+        showError("Please enter the loan amount, interest rate, and tenure.");
+        return;
+      }
+
+      const principal = Number(loanAmountValue);
+      const annualRate = Number(interestRateValue);
+      const years = Number(tenureValue);
+
+      if (
+        !Number.isFinite(principal) ||
+        !Number.isFinite(annualRate) ||
+        !Number.isFinite(years)
+      ) {
+        showError("Please enter valid numbers.");
+        return;
+      }
+
+      if (principal <= 0) {
+        showError("Loan amount must be greater than 0.");
+        return;
+      }
+
+      if (annualRate < 0) {
+        showError("Interest rate cannot be negative.");
+        return;
+      }
+
+      if (years <= 0) {
+        showError("Loan tenure must be greater than 0.");
+        return;
+      }
+
+      if (years > 100) {
+        showError("Please enter a loan tenure of 100 years or less.");
+        return;
+      }
+
+      const numberOfMonths = years * 12;
+      const monthlyRate = annualRate / 12 / 100;
+
+      let emi;
+
+      /*
+        For zero interest:
+        EMI = Principal / Number of Months
+      */
+      if (monthlyRate === 0) {
+        emi = principal / numberOfMonths;
+      } else {
+        const factor = Math.pow(
+          1 + monthlyRate,
+
+numberOfMonths
+
+);
+
+emi =
+
+* principal monthlyRate factor /* (factor 1);
+
+}
+
+const totalPayment = emi * numberOfMonths;
+
+const totalInterest = totalPayment principal;
+
+document.getElementById("monthlyEmi").textConte nt =
+
+formatCurrency(emi);
+
+document.getElementById("result LoanAmount").tex tContent =
+
+formatCurrency (principal);
+
+document.getElementById("totalInterest").textCo ntent =
+
+formatCurrency (Math.max(0, totalInterest));
+
+document.getElementById("totalPayment").textCon tent =
+
+formatCurrency (totalPayment);
+
+document.getElementById("resultTenure").textCon tent = `${formatNumber(years)} years ($ {formatNumber (numberOfMonths)} months)`;
+
+results.classList.add("show");
+}
+
+/* Reset calculator */
+
+function resetCalculator() {
+
+loanAmountInput.value = "";
+
+interestRateInput value = "";
+
+loanTenureInput.value = "";
+
+document.getElementById("monthlyEmi").textConte nt = "0";
+
+document.getElementById("resultLoanAmount").tex tContent = "0";
+
+document.getElementById("totalInterest").textCo ntent = "३०";
+
+document.getElementById("totalPayment").textCon tent = "0";
+
+document.getElementById("resultTenure").textCon tent = "0 years";
+
+}
+
+results.classList.remove("show");
+
+hideError();
+
+/* Button events */
+
+calculateBtn.addEventListener("click", calculateEMI);
+
+resetBtn.addEventListener("click", resetCalculator);
+
+/* Enter key support */
+
+[loanAmountInput, interest Rate Input, loanTenureInput].forEach(
+
+function (input) {
+
+input.addEventListener("keydown", function (event) {
+
+if (event.key === "Enter") {
+
+calculateEMI();
+
+}
+
+});
+
+}
+
+);
+
+</script>
+
+</body>
+</html>
